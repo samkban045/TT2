@@ -8,7 +8,7 @@ from sys import executable
 from telegram import InlineKeyboardMarkup
 from telegram.ext import CommandHandler
 
-from bot import bot, app, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, alive, LOGGER, Interval, rss_session, INCOMPLETE_TASK_NOTIFIER, DB_URI
+from bot import bot, app, dispatcher, updater, botStartTime, IGNORE_PENDING_REQUESTS, alive, LOGGER, Interval, INCOMPLETE_TASK_NOTIFIER, DB_URI
 from .helper.ext_utils.fs_utils import start_cleanup, clean_all, exit_clean_up
 from .helper.ext_utils.telegraph_helper import telegraph
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
@@ -18,7 +18,7 @@ from .helper.telegram_helper.message_utils import sendMessage, sendMarkup, editM
 from .helper.telegram_helper.filters import CustomFilters
 from .helper.telegram_helper.button_build import ButtonMaker
 
-from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss
+from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search
 
 
 
@@ -140,16 +140,6 @@ help_string_telegraph = f'''<br>
 <b>/{BotCommands.LeechSetCommand}</b>: Leech settings
 <br><br>
 <b>/{BotCommands.SetThumbCommand}</b>: Reply photo to set it as Thumbnail
-<br><br>
-<b>/{BotCommands.RssListCommand}</b>: List all subscribed rss feed info
-<br><br>
-<b>/{BotCommands.RssGetCommand}</b>: [Title] [Number](last N links): Force fetch last N links
-<br><br>
-<b>/{BotCommands.RssSubCommand}</b>: [Title] [Rss Link] f: [filter]: Subscribe new rss feed
-<br><br>
-<b>/{BotCommands.RssUnSubCommand}</b>: [Title]: Unubscribe rss feed by title
-<br><br>
-<b>/{BotCommands.RssSettingsCommand}</b>: Rss Settings
 <br><br>
 <b>/{BotCommands.CancelMirror}</b>: Reply to the message by which the download was initiated and that download will be cancelled
 <br><br>
@@ -280,8 +270,6 @@ def main():
     updater.start_polling(drop_pending_updates=IGNORE_PENDING_REQUESTS)
     LOGGER.info("Bot Started!")
     signal(SIGINT, exit_clean_up)
-    if rss_session is not None:
-        rss_session.start()
 
 app.start()
 main()
