@@ -1,7 +1,7 @@
 from os import path as ospath, makedirs
 from psycopg2 import connect, DatabaseError
 
-from bot import DB_URI, AUTHORIZED_CHATS, SUDO_USERS, AS_DOC_USERS, AS_MEDIA_USERS, rss_dict, LOGGER, botname
+from bot import DB_URI, AUTHORIZED_CHATS, SUDO_USERS, AS_DOC_USERS, AS_MEDIA_USERS, LOGGER, botname
 
 class DbManger:
     def __init__(self):
@@ -79,7 +79,6 @@ class DbManger:
                     for x in filters_list:
                         y = x.split(' or ')
                         f_lists.append(y)
-                rss_dict[row[0]] = [row[1], row[2], row[3], f_lists]
             LOGGER.info("Rss data has been imported from Database.")
         self.disconnect()
 
@@ -175,29 +174,6 @@ class DbManger:
         self.cur.execute("SELECT * FROM users WHERE uid = {}".format(uid))
         res = self.cur.fetchone()
         return res
-
-    def rss_add(self, name, link, last, title, filters):
-        if self.err:
-            return
-        q = (name, link, last, title, filters)
-        self.cur.execute("INSERT INTO rss (name, link, last, title, filters) VALUES (%s, %s, %s, %s, %s)", q)
-        self.conn.commit()
-        self.disconnect()
-
-    def rss_update(self, name, last, title):
-        if self.err:
-            return
-        q = (last, title, name)
-        self.cur.execute("UPDATE rss SET last = %s, title = %s WHERE name = %s", q)
-        self.conn.commit()
-        self.disconnect()
-
-    def rss_delete(self, name):
-        if self.err:
-            return
-        self.cur.execute("DELETE FROM rss WHERE name = %s", (name,))
-        self.conn.commit()
-        self.disconnect()
 
     def add_incomplete_task(self, cid: int, link: str, tag: str):
         if self.err:
