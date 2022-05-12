@@ -5,7 +5,7 @@ SHELL ["/bin/bash", "-c"]
 RUN chmod 777 /usr/src/app
 
 RUN apt-get -y update && DEBIAN_FRONTEND="noninteractive" \
-    apt-get install -y python3 python3-pip aria2 \
+    apt-get install -y python3 python3-pip aria2 qbittorrent-nox \
     locales git unzip rtmpdump libmagic-dev libcurl4-openssl-dev \
     tzdata p7zip-full p7zip-rar xz-utils curl pv jq ffmpeg \
     libssl-dev libc-ares-dev libsodium-dev libcrypto++-dev \
