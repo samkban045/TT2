@@ -104,9 +104,6 @@ status_reply_dict = {}
 # Key: update.message.message_id
 # Value: An object of Status
 download_dict = {}
-# key: rss_title
-# value: [rss_feed, last_link, last_title, filter]
-rss_dict = {}
 
 AUTHORIZED_CHATS = set()
 SUDO_USERS = set()
@@ -153,15 +150,6 @@ except:
 
 LOGGER.info("Generating BOT_STRING_SESSION")
 app = Client(name='pyrogram', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN, parse_mode=enums.ParseMode.HTML, no_updates=True)
-
-try:
-    USER_STRING_SESSION = getConfig('USER_STRING_SESSION')
-    if len(USER_STRING_SESSION) == 0:
-        raise KeyError
-    rss_session = Client(name='rss_session', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, session_string=USER_STRING_SESSION, parse_mode=enums.ParseMode.HTML)
-except:
-    USER_STRING_SESSION = None
-    rss_session = None
 
 def aria2c_init():
     try:
@@ -254,12 +242,6 @@ try:
 except:
     SEARCH_LIMIT = 0
 try:
-    RSS_COMMAND = getConfig('RSS_COMMAND')
-    if len(RSS_COMMAND) == 0:
-        raise KeyError
-except:
-    RSS_COMMAND = None
-try:
     CMD_INDEX = getConfig('CMD_INDEX')
     if len(CMD_INDEX) == 0:
         raise KeyError
@@ -300,20 +282,6 @@ try:
     ZIP_UNZIP_LIMIT = float(ZIP_UNZIP_LIMIT)
 except:
     ZIP_UNZIP_LIMIT = None
-try:
-    RSS_CHAT_ID = getConfig('RSS_CHAT_ID')
-    if len(RSS_CHAT_ID) == 0:
-        raise KeyError
-    RSS_CHAT_ID = int(RSS_CHAT_ID)
-except:
-    RSS_CHAT_ID = None
-try:
-    RSS_DELAY = getConfig('RSS_DELAY')
-    if len(RSS_DELAY) == 0:
-        raise KeyError
-    RSS_DELAY = int(RSS_DELAY)
-except:
-    RSS_DELAY = 900
 try:
     TORRENT_TIMEOUT = getConfig('TORRENT_TIMEOUT')
     if len(TORRENT_TIMEOUT) == 0:
